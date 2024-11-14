@@ -45,7 +45,7 @@ public class ComercioController : ControllerBase
         return NotFound("No se puedo agregar el ticket");
     }
 
-    [HttpPost("AtenderTicket")]
+    [HttpGet("AtenderTicket")]
     public IActionResult GetAtenderTicket(int tipoTicket)
     {
         Ticket t=comercio.AtenderTicket(tipoTicket);
@@ -61,7 +61,7 @@ public class ComercioController : ControllerBase
         return Ok();
     }
 
-    [HttpPost("AgregarCuentaCorriente")]
+    [HttpGet("AgregarCuentaCorriente")]
     public IActionResult GetAgregarCuentaCorriente(int nro, string dni)
     {
         CuentaCorriente cc=comercio.AgregarCuentaCorriente(nro, dni);

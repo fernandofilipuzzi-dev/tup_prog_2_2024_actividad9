@@ -8,12 +8,14 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormsApp.DTOs;
+using static System.Net.WebRequestMethods;
 
 namespace WinFormsApp
 {
-    public partial class Form1 : Form
+    public partial class FormPrincipal : Form
     {
-        public Form1()
+        public FormPrincipal()
         {
             InitializeComponent();
         }
@@ -49,6 +51,7 @@ namespace WinFormsApp
 
             int tipo = 1;
 
+            
             string url = $"https://localhost:7191/api/Comercio/AtenderTicket?tipoTicket={tipo}";
             HttpRequestMessage request = new HttpRequestMessage()
             {
@@ -62,7 +65,8 @@ namespace WinFormsApp
             string mensaje = "No exito";
             if (response.IsSuccessStatusCode)
             {
-                mensaje = "exito!";
+                var t = response.Content.ReadFromJsonAsync<TicketDTO>();
+                
             }
             MessageBox.Show(mensaje);
         }
