@@ -12,7 +12,7 @@ namespace ComercioLib.DTOs
         public int tipo { get; set; }
         public int nroOrden { get; set; }
         public DateTime fechaHora { get; set; }
-        public CuentaCorriente ficha { get; set; }
+        public CuentaCorrienteDTO ficha { get; set; }
         public int dni { get; set; }
 
         public TicketDTO(Ticket ticket) 
@@ -28,8 +28,9 @@ namespace ComercioLib.DTOs
             else if (ticket is Pago pago)
             {
                 tipo = 2;
-                ficha = pago.VerCC();
+                ficha = new CuentaCorrienteDTO(pago.VerCC());
             }
         }
+
     }
 }

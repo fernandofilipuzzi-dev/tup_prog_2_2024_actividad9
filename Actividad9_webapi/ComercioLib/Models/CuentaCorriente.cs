@@ -24,5 +24,15 @@ namespace ComercioLib.Models
             if(other !=null) return nroCuenta.CompareTo(other.nroCuenta);
             return 1;
         }
+
+        public int VerNroCuenta()
+        { 
+            return nroCuenta;
+        }
+
+        public Cliente VerTitular()
+        {
+            return titular;
+        }
     }
 }

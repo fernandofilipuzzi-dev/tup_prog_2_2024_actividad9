@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace webapiServer.Controllers
+namespace webapiServicio.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -36,7 +36,8 @@ namespace webapiServer.Controllers
             if (t != null)
             {
                 comercio.AgregarTicket(t);
-                return Ok("turno solicitado ok!");
+                TicketDTO dto = new TicketDTO(t);
+                return Ok(dto);
             }
 
             return NoContent(); 

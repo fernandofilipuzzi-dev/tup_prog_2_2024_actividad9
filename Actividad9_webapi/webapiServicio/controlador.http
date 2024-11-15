@@ -1,0 +1,6 @@
+@webapiServer_HostAddress = http://localhost:7202
+
+GET {{webapiServer_HostAddress}}/controlador/
+Accept: application/json
+
+###
