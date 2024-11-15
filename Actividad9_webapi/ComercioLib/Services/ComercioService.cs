@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ComercioLib.Models;
 
-namespace ComercioLib.Models;
+namespace ComercioLib.Services;
 
-public class Comercio
+public class ComercioService
 {
     Queue<Cliente> nuevosClientes = new Queue<Cliente>();
-    Queue<Pago> nuevosP =new Queue<Pago> ();
+    Queue<Pago> nuevosP = new Queue<Pago>();
     List<CuentaCorriente> cuentasCorrientes = new List<CuentaCorriente>();
-    
+
     public void AgregarTicket(Ticket turno)
     {
         if (turno is Cliente)
@@ -29,9 +30,9 @@ public class Comercio
         Ticket ticket = null;
         if (tipo == 1)
         {
-            if(nuevosClientes.Count>=0)
+            if (nuevosClientes.Count >= 0)
                 ticket = nuevosClientes.Dequeue();
-        } 
+        }
         else if (tipo == 2)
         {
             if (nuevosP.Count >= 0)
@@ -45,7 +46,7 @@ public class Comercio
         CuentaCorriente cc = new CuentaCorriente(nroCC, null);
         cuentasCorrientes.Sort();
         int idx = cuentasCorrientes.BinarySearch(cc);
-        if (idx >=0 ) return cuentasCorrientes[idx];
+        if (idx >= 0) return cuentasCorrientes[idx];
         return null;
     }
 

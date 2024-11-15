@@ -1,5 +1,6 @@
 ﻿using ComercioLib.DTOs;
 using ComercioLib.Models;
+using ComercioLib.Services;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,7 +11,7 @@ namespace webapiServicio.Controllers
     [ApiController]
     public class ComercioController : ControllerBase
     {
-        readonly static Comercio comercio = new Comercio();
+        readonly static ComercioService comercio = new ComercioService();
 
         [HttpGet("AgregarTicket")]
         public IActionResult GetAgregarTicket(int tipo, string dni, int nroCC)
