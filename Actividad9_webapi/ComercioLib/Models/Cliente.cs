@@ -8,8 +8,9 @@ namespace ComercioLib.Models
 {
     public class Cliente:Ticket
     {
+        static int nroInicio = 0;
+
         int dni;
-        static int nroInicio=0;
 
         public int VerDNI()
         {
@@ -17,13 +18,12 @@ namespace ComercioLib.Models
         }
 
         public Cliente(string dni)
-        { 
-            this.dni=Convert.ToInt32(dni);
+        {
+            this.dni = Convert.ToInt32(dni);
 
             nroOrden = ++nroInicio;
 
-            if (this.dni < 3000000 || this.dni > 45000000)
-                throw new Exception("");
+            if (this.dni < 3000000 || this.dni > 45000000) throw new Exception("");
         }
     }
 }

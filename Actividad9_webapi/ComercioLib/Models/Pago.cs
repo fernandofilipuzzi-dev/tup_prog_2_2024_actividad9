@@ -6,17 +6,22 @@ using System.Threading.Tasks;
 
 namespace ComercioLib.Models
 {
-    public class Pago :Ticket
+    public class Pago : Ticket
     {
-        CuentaCorriente ficha;
-        int dni;
         static int nroInicio = 0;
 
-     
+        CuentaCorriente ficha;
+
         public Pago(CuentaCorriente cc)
         {
-                nroOrden = ++nroInicio;
-                cc = ficha;
+            ficha = cc;
+            nroOrden = ++nroInicio;
         }
+
+        public CuentaCorriente VerCC()
+        {
+            return ficha;
+        }
+
     }
 }

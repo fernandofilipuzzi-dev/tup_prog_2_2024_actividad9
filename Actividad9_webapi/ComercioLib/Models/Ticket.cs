@@ -6,19 +6,18 @@ using System.Threading.Tasks;
 
 namespace ComercioLib.Models
 {
-    abstract public class Ticket
+    public class Ticket
     {
-        protected int nroOrden ;
-        public DateTime FechaHora;
+        protected int nroOrden;
+        DateTime fechaHora;
 
-        public int VerNRO() 
-        {
+        public int VerNro() { 
             return nroOrden;
         }
 
         public DateTime VerFecha()
         {
-            return FechaHora;
+            return fechaHora;
         }
     }
 }
