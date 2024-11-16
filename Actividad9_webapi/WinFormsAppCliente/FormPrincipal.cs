@@ -2,6 +2,7 @@ using System.Net.Http.Json;
 using System.Security.Policy;
 using WinFormsAppCliente.DTOs;
 using WinFormsAppCliente.Models;
+using WinFormsAppCliente.Services;
 using static System.Net.WebRequestMethods;
 
 namespace WinFormsAppCliente
@@ -27,37 +28,18 @@ namespace WinFormsAppCliente
                     cc = Convert.ToInt32(tbCC.Text);
                 }
 
-                using var cliente = new HttpClient();
+                var comercio = new ComercioClientService();
 
-                #region consulta
-                string url = $"https://localhost:7202/api/Comercio/AgregarTicket?tipo={tipo}&DNI={dni}&nroCC={cc}";
-                HttpRequestMessage consulta = new HttpRequestMessage();
-                consulta.Method = HttpMethod.Get;
-                consulta.RequestUri = new Uri(url);
-                #endregion
+                var ticket=comercio.AgregarTicket(tipo, dni, cc);
 
-                #region llamada y respuesta
-                HttpResponseMessage respuesta = cliente.Send(consulta);
-                #endregion
-
-                if (respuesta.IsSuccessStatusCode)
+                if(ticket!=null)
                 {
-
-                    //ver que al metodo le coloque async adelante - linea 16
-                    //ver que en 47 tuve que coloar await 
-                    //esto es asi porque readfromjsonasync es un metodo asincrono
-                    TicketDTO dto = await respuesta.Content.ReadFromJsonAsync<TicketDTO>();
-
-                    Ticket ticket = dto.ToTicket();
                     listBox1.Items.Add(ticket);
-
-                    MessageBox.Show("ok");
+                    MessageBox.Show("Turno solicitado");
                 }
                 else
                 {
-                    //me faltan mejoras.
-
-                    MessageBox.Show("no pudo agregarlo");
+                    MessageBox.Show("El turno fue rechazado.");
                 }
             }
             catch (Exception ex) 
@@ -65,24 +47,17 @@ namespace WinFormsAppCliente
                 MessageBox.Show(ex.Message,"Error");
             }
         }
-
-
-
         async private void btnAtenderCliente_Click(object sender, EventArgs e)
         {
             try
             {
-
                 int tipo = -1;
-
 
                 if (rbCompra.Checked) tipo = 1;
                 else if (rbPago.Checked) tipo = 2;
 
-
                 if (tipo > 0)
                 {
-
                     string url = $"https://localhost:7202/api/Comercio/AtenderTicket?tipo={tipo}";
 
                     using HttpClient cliente = new HttpClient();
