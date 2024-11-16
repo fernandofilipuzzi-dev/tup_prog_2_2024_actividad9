@@ -30,7 +30,7 @@ namespace WinFormsAppCliente
 
                 var comercio = new ComercioClientService();
 
-                var ticket=comercio.AgregarTicket(tipo, dni, cc);
+                var ticket=await comercio.AgregarTicket(tipo, dni, cc);
 
                 if(ticket!=null)
                 {
