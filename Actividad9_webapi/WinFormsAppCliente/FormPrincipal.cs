@@ -67,17 +67,14 @@ namespace WinFormsAppCliente
                     }
                     else
                     {
-                        //me faltan mejoras.
                         MessageBox.Show("no pudo quitarlo");
                     }
-
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
             }
-
         }
     }
 }
