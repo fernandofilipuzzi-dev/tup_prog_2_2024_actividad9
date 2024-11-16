@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http.Json;
 using System.Security.Policy;
 using WinFormsAppCliente.DTOs;
@@ -14,6 +15,8 @@ namespace WinFormsAppCliente
             InitializeComponent();
         }
 
+        ComercioClientService comercio = new ComercioClientService();
+
         async private void btnAgregarTicket_Click(object sender, EventArgs e)
         {
             try
@@ -27,8 +30,6 @@ namespace WinFormsAppCliente
                     tipo = 2;
                     cc = Convert.ToInt32(tbCC.Text);
                 }
-
-                var comercio = new ComercioClientService();
 
                 var ticket=await comercio.AgregarTicket(tipo, dni, cc);
 
@@ -58,31 +59,15 @@ namespace WinFormsAppCliente
 
                 if (tipo > 0)
                 {
-                    string url = $"https://localhost:7202/api/Comercio/AtenderTicket?tipo={tipo}";
+                    var ticket = await comercio.AtenderTicket(tipo);
 
-                    using HttpClient cliente = new HttpClient();
-
-                    HttpRequestMessage consulta = new HttpRequestMessage();
-                    consulta.RequestUri = new Uri(url);
-                    consulta.Method = HttpMethod.Get;
-
-                    HttpResponseMessage respuesta = cliente.Send(consulta);
-
-                    if (respuesta.IsSuccessStatusCode)
-                    {
-                        //los metodos asincronocs me obligan a usar await y async 
-                        TicketDTO dto = await respuesta.Content.ReadFromJsonAsync<TicketDTO>();
-
-                        Ticket ticket = dto.ToTicket();
-
+                    if(ticket!=null)
+                    { 
                         listBox1.Items.Remove(ticket);//me obliga a sobreescibir el equals!
-
-                        //me falta agregar el ciekt primero en el listbox
                     }
                     else
                     {
                         //me faltan mejoras.
-
                         MessageBox.Show("no pudo quitarlo");
                     }
 

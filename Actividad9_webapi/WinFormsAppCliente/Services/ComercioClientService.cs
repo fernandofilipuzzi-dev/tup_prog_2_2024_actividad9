@@ -39,5 +39,29 @@ namespace WinFormsAppCliente.Services
             }
             return null;
         }
+
+        async public Task<Ticket> AtenderTicket(int tipo)
+        {
+            string url = $"https://localhost:7202/api/Comercio/AtenderTicket?tipo={tipo}";
+
+            using HttpClient cliente = new HttpClient();
+
+            HttpRequestMessage consulta = new HttpRequestMessage();
+            consulta.RequestUri = new Uri(url);
+            consulta.Method = HttpMethod.Get;
+
+            HttpResponseMessage respuesta = cliente.Send(consulta);
+
+            if (respuesta.IsSuccessStatusCode)
+            {
+                //los metodos asincronocs me obligan a usar await y async 
+                TicketDTO dto = await respuesta.Content.ReadFromJsonAsync<TicketDTO>();
+
+                Ticket ticket = dto.ToTicket();
+                return ticket;
+                
+            }
+            return null;
+        }
     }
 }
