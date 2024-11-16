@@ -18,7 +18,6 @@ namespace ComercioLib.Models
             this.nroCuenta = nroCuenta;
             this.titular = titular;
         }
-
         public int CompareTo(CuentaCorriente? other)
         {
             if(other !=null) return nroCuenta.CompareTo(other.nroCuenta);

@@ -16,9 +16,13 @@ namespace ComercioLib.DTOs
         public CuentaCorrienteDTO(CuentaCorriente cc)
         {
             this.nroCuenta=cc.VerNroCuenta();
-            
-            if(cc.VerNroCuenta()!=null)
+
+            if (cc.VerTitular() != null)
+            {
                 this.dni = cc.VerTitular().VerDNI();
+            }
+
+            this.saldo = saldo;
         }
     }
 }

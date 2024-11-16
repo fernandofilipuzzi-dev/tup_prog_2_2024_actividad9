@@ -31,6 +31,5 @@ namespace ComercioLib.DTOs
                 ficha = new CuentaCorrienteDTO(pago.VerCC());
             }
         }
-
     }
 }
