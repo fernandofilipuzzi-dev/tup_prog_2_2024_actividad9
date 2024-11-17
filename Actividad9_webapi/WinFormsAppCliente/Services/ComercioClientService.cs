@@ -72,7 +72,8 @@ namespace WinFormsAppCliente.Services
         }
 
 
-        //en estos casos es mejor pedir todos los tickets juntos
+        //en estos casos es mejor pedir todos los tickets juntos - pero para ilustrar
+        //la forma de usarlo en prog2 usamos esto de verticket y cantidadticket
         async public Task<Ticket> VerTicketAtendido(int idx)
         {
             string url = $"https://localhost:7202/api/Comercio/VerTicketAtendido?idx={idx}";
