@@ -72,11 +72,13 @@ namespace WinFormsAppCliente
             }
         }
 
-       async private void btnExportarTicketsAtendidos_Click(object sender, EventArgs e)
+        async private void btnExportarTicketsAtendidos_Click(object sender, EventArgs e)
         {
+            saveFileDialog1.Title = "Exportando tickets atendidos";
+            saveFileDialog1.Filter = "Fichero csv|*.csv";
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            { 
-                string path=saveFileDialog1.FileName;
+            {
+                string path = saveFileDialog1.FileName;
 
                 FileStream fs = null;
                 StreamWriter sw = null;
@@ -101,10 +103,10 @@ namespace WinFormsAppCliente
                 {
                     MessageBox.Show(ex.Message, "Error");
                 }
-                finally 
+                finally
                 {
-                    if(sw!=null)  sw.Close();
-                    if(fs!=null) fs.Close();
+                    if (sw != null) sw.Close();
+                    if (fs != null) fs.Close();
                 }
             }
         }
