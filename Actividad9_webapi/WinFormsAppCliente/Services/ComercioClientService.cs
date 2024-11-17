@@ -41,7 +41,6 @@ namespace WinFormsAppCliente.Services
             {
                 throw new Exception(respuesta.ReasonPhrase);
             }
-            return null;
         }
 
         async public Task<Ticket> AtenderTicket(int tipo)
@@ -68,9 +67,7 @@ namespace WinFormsAppCliente.Services
             {
                 throw new Exception(respuesta.ReasonPhrase);
             }
-            return null;
         }
-
 
         //en estos casos es mejor pedir todos los tickets juntos - pero para ilustrar
         //la forma de usarlo en prog2 usamos esto de verticket y cantidadticket
