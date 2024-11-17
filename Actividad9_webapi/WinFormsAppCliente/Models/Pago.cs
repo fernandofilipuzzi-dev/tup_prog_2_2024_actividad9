@@ -21,7 +21,16 @@ namespace WinFormsAppCliente.Models
 
         public override string ToString()
         {
-            return $"PAGO;{base.ToString()}";
+            //tipo;numero;dni;ctaCte
+            int dni = 0;
+            int nroCuenta = 0;
+            if (ficha != null)
+            {
+                nroCuenta = ficha.nroCuenta;
+                if (ficha.titular != null) dni = ficha.titular.DNI;
+            }
+            
+            return $"PAGO;{base.ToString()};{dni};{nroCuenta}";
         }
 
         //esto lo hice porque cuando extraigo del listbox compara usando el equals y no por referencia.

@@ -181,6 +181,7 @@
             button4.TabIndex = 12;
             button4.Text = "Importar Ctas Ctes";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += btnImportarCuentasCorrientes_Click;
             // 
             // label2
             // 

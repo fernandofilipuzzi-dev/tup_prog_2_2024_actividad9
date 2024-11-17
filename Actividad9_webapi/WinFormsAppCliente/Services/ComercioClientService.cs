@@ -13,12 +13,18 @@ namespace WinFormsAppCliente.Services
 {
     public class ComercioClientService
     {
+
+        string urlBase = "https://localhost:7202";
+        //string urlBase = "https://comercioturnos.somee.com/";
+
         async public Task<Ticket> AgregarTicket(int tipo, string dni, int cc)
         {
             using var cliente = new HttpClient();
 
+            if (string.IsNullOrEmpty(dni)) dni = "0";
+
             #region consulta
-            string url = $"https://localhost:7202/api/Comercio/AgregarTicket?tipo={tipo}&DNI={dni}&nroCC={cc}";
+            string url = $"{urlBase}/api/Comercio/AgregarTicket?tipo={tipo}&DNI={dni}&nroCC={cc}";
             HttpRequestMessage consulta = new HttpRequestMessage();
             consulta.Method = HttpMethod.Get;
             consulta.RequestUri = new Uri(url);
@@ -45,7 +51,7 @@ namespace WinFormsAppCliente.Services
 
         async public Task<Ticket> AtenderTicket(int tipo)
         {
-            string url = $"https://localhost:7202/api/Comercio/AtenderTicket?tipo={tipo}";
+            string url = $"{urlBase}/api/Comercio/AtenderTicket?tipo={tipo}";
 
             using HttpClient cliente = new HttpClient();
 
@@ -73,7 +79,7 @@ namespace WinFormsAppCliente.Services
         //la forma de usarlo en prog2 usamos esto de verticket y cantidadticket
         async public Task<Ticket> VerTicketAtendido(int idx)
         {
-            string url = $"https://localhost:7202/api/Comercio/VerTicketAtendido?idx={idx}";
+            string url = $"{urlBase}/api/Comercio/VerTicketAtendido?idx={idx}";
 
             using HttpClient cliente = new HttpClient();
 
@@ -97,9 +103,10 @@ namespace WinFormsAppCliente.Services
             }
             return null;
         }
+        
         async public Task<int> CantidadTicketsAtendido()
         {
-            string url = $"https://localhost:7202/api/Comercio/CantidadTicketsAtendidos";
+            string url = $"{urlBase}/api/Comercio/CantidadTicketsAtendidos";
 
             using HttpClient cliente = new HttpClient();
 
@@ -115,6 +122,28 @@ namespace WinFormsAppCliente.Services
                 int cantidad = await respuesta.Content.ReadFromJsonAsync<int>();
 
                 return cantidad;
+            }
+            else
+            {
+                throw new Exception(respuesta.ReasonPhrase);
+            }
+        }
+
+        async public Task AgregarCuentaCorriente(int nroCC, string dni, double saldo)
+        {
+            string url = $"{urlBase}/api/Comercio/AgregarCuentaCorriente?nroCC={nroCC}&dni={dni}&saldo={saldo}";
+
+            using HttpClient cliente = new HttpClient();
+
+            HttpRequestMessage consulta = new HttpRequestMessage();
+            consulta.RequestUri = new Uri(url);
+            consulta.Method = HttpMethod.Get;
+
+            HttpResponseMessage respuesta = cliente.Send(consulta);
+
+            if (respuesta.IsSuccessStatusCode)
+            {
+                return;
             }
             else
             {

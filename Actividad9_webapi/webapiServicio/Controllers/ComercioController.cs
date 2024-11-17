@@ -58,15 +58,6 @@ namespace webapiServicio.Controllers
             return NotFound("No se encontraron tickets");
         }
 
-        [HttpGet("AgregarCuentaCorriente")]
-        public IActionResult GetAgregarCuentaCorriente(int nroCC, string dni)
-        {
-            CuentaCorriente cc=comercio.AgregarCuentaCorriente(nroCC, dni);
-
-            if (cc != null) return Ok("La cuenta fue agregada");
-            return NotFound();
-        }
-
         [HttpGet("VerTicketAtendido")]
         public IActionResult GetVerTicketAtendidos(int idx)
         {
@@ -82,6 +73,15 @@ namespace webapiServicio.Controllers
             int idx=comercio.CantidadTicketAtendidos;
 
             return Ok(idx);
+        }
+
+        [HttpGet("AgregarCuentaCorriente")]
+        public IActionResult GetAgregarCuentaCorriente(int nroCC, string dni, double saldo)
+        {
+            CuentaCorriente cc = comercio.AgregarCuentaCorriente(nroCC, dni);
+
+            if (cc != null) return Ok("La cuenta fue agregada");
+            return NotFound();
         }
 
     }

@@ -89,6 +89,7 @@ namespace WinFormsAppCliente
 
                     int cant = await comercio.CantidadTicketsAtendido();
 
+                    Console.WriteLine("tipo;numero;dni;ctaCte");
                     for (int idx = 0; idx < cant; idx++)
                     {
                         Ticket ticket = await comercio.VerTicketAtendido(idx);
@@ -106,6 +107,49 @@ namespace WinFormsAppCliente
                 finally
                 {
                     if (sw != null) sw.Close();
+                    if (fs != null) fs.Close();
+                }
+            }
+        }
+
+        async private void btnImportarCuentasCorrientes_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Title = "Importar cuentas corrientes";
+            openFileDialog1.Filter = "Fichero csv|*.csv";
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string path = openFileDialog1.FileName;
+
+                FileStream fs = null;
+                StreamReader sr = null;
+                try
+                {
+                    fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read);
+                    sr = new StreamReader(fs);
+
+                    //(Nro;dni;saldo).
+                    sr.ReadLine();//descarto la primera linea
+
+                    while (sr.EndOfStream==false)
+                    {
+                        string linea=sr.ReadLine();
+                        string[] campos = linea.Split(';');
+
+                        int nro = Convert.ToInt32(campos[0]);
+                        string dni = campos[1];
+                        double saldo = Convert.ToDouble(campos[2]);
+
+                        await comercio.AgregarCuentaCorriente(nro,dni,saldo);//en el server haré las comprobaciones
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
+                }
+                finally
+                {
+                    if (sr != null) sr.Close();
                     if (fs != null) fs.Close();
                 }
             }

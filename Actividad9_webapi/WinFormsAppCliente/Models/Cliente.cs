@@ -10,7 +10,8 @@
 
         public override string ToString()
         {
-            return $"CLIENTE;{base.ToString()}";//falta
+            //tipo;numero;dni;ctaCte
+            return $"CLIENTE;{base.ToString()};{DNI};";//falta
         }
 
         //esto lo hice porque cuando extraigo del listbox compara usando el equals y no por referencia.
