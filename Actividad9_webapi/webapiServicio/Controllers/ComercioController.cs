@@ -81,7 +81,21 @@ namespace webapiServicio.Controllers
             CuentaCorriente cc = comercio.AgregarCuentaCorriente(nroCC, dni);
 
             if (cc != null) return Ok("La cuenta fue agregada");
-            return NotFound();
+            return Ok("La cuenta fue actualizada");
+        }
+
+        [HttpGet("VerTicketsSinAtender")]
+        public IActionResult GetVerTicketsSinAtender()
+        {
+            List<Ticket> ticketsSinAtender = comercio.VerTicketsSinAtender();
+
+            List<TicketDTO> ticketDTOs = new List<TicketDTO>();
+            foreach (Ticket t in ticketsSinAtender)
+            {
+                ticketDTOs.Add(new TicketDTO(t));
+            }
+
+            return Ok(ticketDTOs);
         }
 
     }

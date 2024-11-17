@@ -130,16 +130,16 @@ namespace WinFormsAppCliente
                     //(Nro;dni;saldo).
                     sr.ReadLine();//descarto la primera linea
 
-                    while (sr.EndOfStream==false)
+                    while (sr.EndOfStream == false)
                     {
-                        string linea=sr.ReadLine();
+                        string linea = sr.ReadLine();
                         string[] campos = linea.Split(';');
 
                         int nro = Convert.ToInt32(campos[0]);
                         string dni = campos[1];
                         double saldo = Convert.ToDouble(campos[2]);
 
-                        await comercio.AgregarCuentaCorriente(nro,dni,saldo);//en el server haré las comprobaciones
+                        await comercio.AgregarCuentaCorriente(nro, dni, saldo);//en el server haré las comprobaciones
                     }
 
                 }
@@ -153,6 +153,29 @@ namespace WinFormsAppCliente
                     if (fs != null) fs.Close();
                 }
             }
+        }
+
+        async private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            //resuelve el problema si se cargan turnos por otro lado.
+            try
+            {
+                listBox1.Items.Clear();
+
+                //alternativa a la forma que se hizo las consultas para tickets atendidos
+                List<Ticket> tickets = await comercio.VerTicketsSinAtender();
+                listBox1.Items.AddRange(tickets.ToArray());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
+        private void FormPrincipal_Load(object sender, EventArgs e)
+        {
+            //me trae los tickets pendientes
+            btnActualizar.PerformClick();
         }
     }
 }

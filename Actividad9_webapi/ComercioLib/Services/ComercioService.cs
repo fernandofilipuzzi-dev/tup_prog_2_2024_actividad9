@@ -14,6 +14,8 @@ public class ComercioService
     List<CuentaCorriente> cuentasCorrientes = new List<CuentaCorriente>();
     List<Ticket> ticketsAtendidos=new List<Ticket>();
 
+    List<Ticket> ticketsSinAtender = new List<Ticket>();
+
     public int CantidadTicketAtendidos 
     {
         get
@@ -39,6 +41,9 @@ public class ComercioService
         {
             nuevosP.Enqueue((Pago)turno);
         }
+
+        //es una forma para poder recuperar los tickets sin atender si los desarializo y conservar el orden en que estan
+        if(turno!=null) ticketsSinAtender.Add(turno);
     }
 
     public Ticket AtenderTicket(int tipo)
@@ -58,6 +63,7 @@ public class ComercioService
         if (ticket !=null)
         {
             ticketsAtendidos.Add(ticket);
+            ticketsSinAtender.Remove(ticket);
         }
 
         return ticket;
@@ -83,5 +89,19 @@ public class ComercioService
             return cc;
         }
         return null;
+    }
+
+    public List<Ticket> VerTicketsSinAtender()
+    {
+        /*alternativa 1
+        List<Ticket> tickets= new List<Ticket>();
+
+        tickets.AddRange( nuevosP.ToArray());
+        tickets.AddRange( nuevosClientes.ToArray());
+        */
+
+        //alternativa 2
+
+        return ticketsSinAtender;
     }
 }

@@ -44,6 +44,7 @@
             label2 = new Label();
             openFileDialog1 = new OpenFileDialog();
             saveFileDialog1 = new SaveFileDialog();
+            btnActualizar = new Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             SuspendLayout();
@@ -196,11 +197,23 @@
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
+            // btnActualizar
+            // 
+            btnActualizar.Location = new Point(207, 163);
+            btnActualizar.Margin = new Padding(4);
+            btnActualizar.Name = "btnActualizar";
+            btnActualizar.Size = new Size(91, 29);
+            btnActualizar.TabIndex = 14;
+            btnActualizar.Text = "Actualizar";
+            btnActualizar.UseVisualStyleBackColor = true;
+            btnActualizar.Click += btnActualizar_Click;
+            // 
             // FormPrincipal
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(433, 419);
+            Controls.Add(btnActualizar);
             Controls.Add(label2);
             Controls.Add(button4);
             Controls.Add(btnAtenderCliente);
@@ -212,9 +225,12 @@
             Controls.Add(tbDNI);
             Controls.Add(btnAgregarTicket);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Margin = new Padding(4);
             Name = "FormPrincipal";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
+            Load += FormPrincipal_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
@@ -241,5 +257,6 @@
         private Label label2;
         private OpenFileDialog openFileDialog1;
         private SaveFileDialog saveFileDialog1;
+        private Button btnActualizar;
     }
 }

@@ -14,8 +14,10 @@ namespace WinFormsAppCliente.Services
     public class ComercioClientService
     {
 
-        string urlBase = "https://localhost:7202";
-        //string urlBase = "https://comercioturnos.somee.com/";
+        //string urlBase = "https://localhost:7202";
+
+        //api publicada
+        string urlBase = "http://comercioturnos.somee.com";
 
         async public Task<Ticket> AgregarTicket(int tipo, string dni, int cc)
         {
@@ -101,7 +103,6 @@ namespace WinFormsAppCliente.Services
             {
                 throw new Exception(respuesta.ReasonPhrase);
             }
-            return null;
         }
         
         async public Task<int> CantidadTicketsAtendido()
@@ -144,6 +145,38 @@ namespace WinFormsAppCliente.Services
             if (respuesta.IsSuccessStatusCode)
             {
                 return;
+            }
+            else
+            {
+                throw new Exception(respuesta.ReasonPhrase);
+            }
+        }
+
+        async public Task<List<Ticket>> VerTicketsSinAtender()
+        {
+            List<Ticket> tickets=new List<Ticket>();
+
+            string url = $"{urlBase}/api/Comercio/VerTicketsSinAtender";
+
+            using HttpClient cliente = new HttpClient();
+
+            HttpRequestMessage consulta = new HttpRequestMessage();
+            consulta.RequestUri = new Uri(url);
+            consulta.Method = HttpMethod.Get;
+
+            HttpResponseMessage respuesta = cliente.Send(consulta);
+
+            if (respuesta.IsSuccessStatusCode)
+            {
+                //los metodos asincronocs me obligan a usar await y async 
+                List<TicketDTO> dtos = await respuesta.Content.ReadFromJsonAsync<List<TicketDTO>>();
+
+                foreach (TicketDTO dto in dtos)
+                {
+                    tickets.Add( dto.ToTicket() );
+                }
+                
+                return tickets;
             }
             else
             {
