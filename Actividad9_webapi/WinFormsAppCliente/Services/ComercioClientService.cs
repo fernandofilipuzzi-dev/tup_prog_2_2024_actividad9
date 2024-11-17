@@ -17,7 +17,7 @@ namespace WinFormsAppCliente.Services
         //string urlBase = "https://localhost:7202";
 
         //api publicada
-        string urlBase = "http://comercioturnos.somee.com";
+        string urlBase = "https://comercioturnos.somee.com";
 
         async public Task<Ticket> AgregarTicket(int tipo, string dni, int cc)
         {
