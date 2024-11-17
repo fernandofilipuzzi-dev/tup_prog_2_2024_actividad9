@@ -67,5 +67,22 @@ namespace webapiServicio.Controllers
             return NotFound();
         }
 
+        [HttpGet("VerTicketAtendido")]
+        public IActionResult GetVerTicketAtendidos(int idx)
+        {
+            Ticket ticket = comercio.VerTicketAtendido(idx);
+
+            if (ticket != null) return Ok( new TicketDTO(ticket));
+            return NotFound();
+        }
+
+        [HttpGet("CantidadTicketsAtendidos")]
+        public IActionResult GetAgregarCuentaCorriente()
+        {
+            int idx=comercio.CantidadTicketAtendidos;
+
+            return Ok(idx);
+        }
+
     }
 }

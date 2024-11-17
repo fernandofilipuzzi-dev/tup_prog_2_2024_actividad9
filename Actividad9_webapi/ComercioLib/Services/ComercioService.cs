@@ -12,6 +12,22 @@ public class ComercioService
     Queue<Cliente> nuevosClientes = new Queue<Cliente>();
     Queue<Pago> nuevosP = new Queue<Pago>();
     List<CuentaCorriente> cuentasCorrientes = new List<CuentaCorriente>();
+    List<Ticket> ticketsAtendidos=new List<Ticket>();
+
+    public int CantidadTicketAtendidos 
+    {
+        get
+        {
+            return ticketsAtendidos.Count;
+        }
+    }
+
+    public Ticket VerTicketAtendido(int idx)
+    {
+        if (idx >= 0 && idx <= CantidadTicketAtendidos)
+            return ticketsAtendidos[idx];
+        return null;
+    }
 
     public void AgregarTicket(Ticket turno)
     {
@@ -38,6 +54,12 @@ public class ComercioService
             if (nuevosP.Count >= 0)
                 ticket = nuevosP.Dequeue();
         }
+
+        if (ticket !=null)
+        {
+            ticketsAtendidos.Add(ticket);
+        }
+
         return ticket;
     }
 

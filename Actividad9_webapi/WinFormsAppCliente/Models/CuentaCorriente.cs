@@ -1,5 +1,7 @@
 ﻿
 
+using System.Net;
+
 namespace WinFormsAppCliente.Models
 {
     public class CuentaCorriente 
@@ -14,6 +16,8 @@ namespace WinFormsAppCliente.Models
             nroCuenta = nroCC;
             this.titular = titular;
         }
+
+        
 
     }
 }

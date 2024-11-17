@@ -39,9 +39,11 @@
             label1 = new Label();
             listBox1 = new ListBox();
             groupBox2 = new GroupBox();
-            button3 = new Button();
+            btnExportarTicketsAtendidos = new Button();
             button4 = new Button();
             label2 = new Label();
+            openFileDialog1 = new OpenFileDialog();
+            saveFileDialog1 = new SaveFileDialog();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             SuspendLayout();
@@ -159,15 +161,16 @@
             groupBox2.TabIndex = 10;
             groupBox2.TabStop = false;
             // 
-            // button3
+            // btnExportarTicketsAtendidos
             // 
-            button3.Location = new Point(320, 205);
-            button3.Margin = new Padding(4);
-            button3.Name = "button3";
-            button3.Size = new Size(96, 59);
-            button3.TabIndex = 11;
-            button3.Text = "Exportar tickets";
-            button3.UseVisualStyleBackColor = true;
+            btnExportarTicketsAtendidos.Location = new Point(320, 205);
+            btnExportarTicketsAtendidos.Margin = new Padding(4);
+            btnExportarTicketsAtendidos.Name = "btnExportarTicketsAtendidos";
+            btnExportarTicketsAtendidos.Size = new Size(96, 59);
+            btnExportarTicketsAtendidos.TabIndex = 11;
+            btnExportarTicketsAtendidos.Text = "Exportar tickets";
+            btnExportarTicketsAtendidos.UseVisualStyleBackColor = true;
+            btnExportarTicketsAtendidos.Click += btnExportarTicketsAtendidos_Click;
             // 
             // button4
             // 
@@ -188,6 +191,10 @@
             label2.TabIndex = 13;
             label2.Text = "Turnos";
             // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog1";
+            // 
             // FormPrincipal
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -196,7 +203,7 @@
             Controls.Add(label2);
             Controls.Add(button4);
             Controls.Add(btnAtenderCliente);
-            Controls.Add(button3);
+            Controls.Add(btnExportarTicketsAtendidos);
             Controls.Add(groupBox2);
             Controls.Add(listBox1);
             Controls.Add(label1);
@@ -228,8 +235,10 @@
         private Label label1;
         private ListBox listBox1;
         private GroupBox groupBox2;
-        private Button button3;
+        private Button btnExportarTicketsAtendidos;
         private Button button4;
         private Label label2;
+        private OpenFileDialog openFileDialog1;
+        private SaveFileDialog saveFileDialog1;
     }
 }

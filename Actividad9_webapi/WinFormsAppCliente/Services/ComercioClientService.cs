@@ -37,6 +37,10 @@ namespace WinFormsAppCliente.Services
                 Ticket ticket = dto.ToTicket();
                 return ticket;
             }
+            else
+            {
+                throw new Exception(respuesta.ReasonPhrase);
+            }
             return null;
         }
 
@@ -59,9 +63,65 @@ namespace WinFormsAppCliente.Services
 
                 Ticket ticket = dto.ToTicket();
                 return ticket;
-                
+            }
+            else
+            {
+                throw new Exception(respuesta.ReasonPhrase);
             }
             return null;
+        }
+
+
+        //en estos casos es mejor pedir todos los tickets juntos
+        async public Task<Ticket> VerTicketAtendido(int idx)
+        {
+            string url = $"https://localhost:7202/api/Comercio/VerTicketAtendido?idx={idx}";
+
+            using HttpClient cliente = new HttpClient();
+
+            HttpRequestMessage consulta = new HttpRequestMessage();
+            consulta.RequestUri = new Uri(url);
+            consulta.Method = HttpMethod.Get;
+
+            HttpResponseMessage respuesta = cliente.Send(consulta);
+
+            if (respuesta.IsSuccessStatusCode)
+            {
+                //los metodos asincronocs me obligan a usar await y async 
+                TicketDTO dto = await respuesta.Content.ReadFromJsonAsync<TicketDTO>();
+
+                Ticket ticket = dto.ToTicket();
+                return ticket;
+            }
+            else
+            {
+                throw new Exception(respuesta.ReasonPhrase);
+            }
+            return null;
+        }
+        async public Task<int> CantidadTicketsAtendido()
+        {
+            string url = $"https://localhost:7202/api/Comercio/CantidadTicketsAtendidos";
+
+            using HttpClient cliente = new HttpClient();
+
+            HttpRequestMessage consulta = new HttpRequestMessage();
+            consulta.RequestUri = new Uri(url);
+            consulta.Method = HttpMethod.Get;
+
+            HttpResponseMessage respuesta = cliente.Send(consulta);
+
+            if (respuesta.IsSuccessStatusCode)
+            {
+                //los metodos asincronocs me obligan a usar await y async 
+                int cantidad = await respuesta.Content.ReadFromJsonAsync<int>();
+
+                return cantidad;
+            }
+            else
+            {
+                throw new Exception(respuesta.ReasonPhrase);
+            }
         }
     }
 }

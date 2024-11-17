@@ -13,8 +13,11 @@ namespace WinFormsAppCliente.DTOs
         public int tipo { get; set; }
         public int nroOrden { get; set; }
         public DateTime fechaHora { get; set; }
-        public CuentaCorriente ficha { get; set; }
+        public CuentaCorrienteDTO ficha { get; set; }
         public int DNI { get; set; }
+
+        public TicketDTO()
+        { }
 
         public Ticket ToTicket()
         {
@@ -26,9 +29,10 @@ namespace WinFormsAppCliente.DTOs
             }
             else if(tipo == 2)
             {
-                Cliente cliente = new Cliente(DNI);
-                CuentaCorriente cc=ficha;
-                ticket = new Pago(ficha);
+                CuentaCorriente cc = null;
+                if (ficha!=null)
+                    cc=ficha.ToCuentaCorriente();
+                ticket = new Pago(cc);
                 ticket.nroOrden = nroOrden;
             }
             return ticket;

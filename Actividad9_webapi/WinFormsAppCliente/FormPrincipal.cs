@@ -1,10 +1,5 @@
-using System.Net;
-using System.Net.Http.Json;
-using System.Security.Policy;
-using WinFormsAppCliente.DTOs;
 using WinFormsAppCliente.Models;
 using WinFormsAppCliente.Services;
-using static System.Net.WebRequestMethods;
 
 namespace WinFormsAppCliente
 {
@@ -31,9 +26,9 @@ namespace WinFormsAppCliente
                     cc = Convert.ToInt32(tbCC.Text);
                 }
 
-                var ticket=await comercio.AgregarTicket(tipo, dni, cc);
+                var ticket = await comercio.AgregarTicket(tipo, dni, cc);
 
-                if(ticket!=null)
+                if (ticket != null)
                 {
                     listBox1.Items.Add(ticket);
                     MessageBox.Show("Turno solicitado");
@@ -43,9 +38,9 @@ namespace WinFormsAppCliente
                     MessageBox.Show("El turno fue rechazado.");
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message,"Error");
+                MessageBox.Show(ex.Message, "Error");
             }
         }
         async private void btnAtenderCliente_Click(object sender, EventArgs e)
@@ -61,8 +56,8 @@ namespace WinFormsAppCliente
                 {
                     var ticket = await comercio.AtenderTicket(tipo);
 
-                    if(ticket!=null)
-                    { 
+                    if (ticket != null)
+                    {
                         listBox1.Items.Remove(ticket);//me obliga a sobreescibir el equals!
                     }
                     else
@@ -74,6 +69,43 @@ namespace WinFormsAppCliente
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
+       async private void btnExportarTicketsAtendidos_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            { 
+                string path=saveFileDialog1.FileName;
+
+                FileStream fs = null;
+                StreamWriter sw = null;
+                try
+                {
+                    fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
+                    sw = new StreamWriter(fs);
+
+                    int cant = await comercio.CantidadTicketsAtendido();
+
+                    for (int idx = 0; idx < cant; idx++)
+                    {
+                        Ticket ticket = await comercio.VerTicketAtendido(idx);
+
+                        if (ticket != null)
+                        {
+                            sw.WriteLine(ticket);// me valgo del tostring por polimorfismo
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
+                }
+                finally 
+                {
+                    if(sw!=null)  sw.Close();
+                    if(fs!=null) fs.Close();
+                }
             }
         }
     }
